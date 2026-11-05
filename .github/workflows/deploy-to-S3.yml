@@ -1,0 +1,31 @@
+name: Sync Repo to S3 using OIDC
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6.3.0
+        with:
+          role-to-assume: arn:aws:iam::550644673161:role/TTT3373-GitHubActions-Test
+          aws-region: eu-west-2
+          allowed-account-ids: 550644673161
+          role-session-name: TTT3373-${{ github.run_id }}
+          role-duration-seconds: 900
+      
+      - name: Sync Code to S3 Bucket with Delete Option
+        run: |
+          aws s3 sync . s3://javid-ttt3373-oidc-test/TTT3373Test --delete
