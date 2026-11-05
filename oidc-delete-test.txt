@@ -1,0 +1,3 @@
+TTT-3373 OIDC POC - DELETION TEST
+Version 1
+Initial deployment using GitHub Actions OIDC
