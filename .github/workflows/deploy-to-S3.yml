@@ -1,9 +1,7 @@
 name: Sync Repo to S3 using OIDC
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 permissions:
   id-token: write
